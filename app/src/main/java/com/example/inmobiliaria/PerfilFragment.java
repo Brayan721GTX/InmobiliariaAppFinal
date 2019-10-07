@@ -9,6 +9,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.inmobiliaria.modelo.Propietario;
+import com.example.inmobiliaria.modelo.PropietarioData;
 
 
 /**
@@ -66,7 +72,41 @@ public class PerfilFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_perfil, container, false);
+        View view = inflater.inflate(R.layout.fragment_perfil, container, false);
+
+        final Propietario p = new PropietarioData().obtenerPropietarioPorId(Home.idPropietario);
+
+        final EditText etDni = view.findViewById(R.id.editText3);
+        etDni.setText(p.getDni());
+        final EditText etApellido = view.findViewById(R.id.editText4);
+        etApellido.setText(p.getApellido());
+        final EditText etnombre = view.findViewById(R.id.editText5);
+        etnombre.setText(p.getNombre());
+        final EditText etTelefono = view.findViewById(R.id.editText6);
+        etTelefono.setText(p.getTelefono());
+        final EditText etMail = view.findViewById(R.id.editText7);
+        etMail.setText(p.getMail());
+        final EditText etPassword = view.findViewById(R.id.editText8);
+        etPassword.setText(p.getPassword());
+
+        Button btnEditar = view.findViewById(R.id.button2);
+
+        btnEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                p.setDni(etDni.getText().toString());
+                p.setApellido(etApellido.getText().toString());
+                p.setNombre(etnombre.getText().toString());
+                p.setTelefono(etTelefono.getText().toString());
+                p.setMail(etMail.getText().toString());
+                p.setPassword(etPassword.getText().toString());
+
+                new PropietarioData().editarPropietario(p);
+                Toast.makeText(getContext(), "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

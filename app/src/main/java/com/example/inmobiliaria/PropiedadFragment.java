@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,8 @@ public class PropiedadFragment extends Fragment{
 
     private OnFragmentInteractionListener mListener;
 
+    private String idInmueble;
+
     public PropiedadFragment() {
         // Required empty public constructor
     }
@@ -68,6 +71,9 @@ public class PropiedadFragment extends Fragment{
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        Bundle bundle = getArguments();
+        this.idInmueble = bundle.getString("idInmueble");
     }
 
     @Override
@@ -92,6 +98,7 @@ public class PropiedadFragment extends Fragment{
         adapterTipos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTipo.setAdapter(adapterTipos);
         spTipo.setSelection(0);
+        spTipo.setEnabled(false);
 
         Spinner spUso = view.findViewById(R.id.spinner2);
         String[] arrayUsos = new String[]{"Comercial", "Residencial"};
@@ -100,6 +107,7 @@ public class PropiedadFragment extends Fragment{
         adapterUsos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spUso.setAdapter(adapterUsos);
         spUso.setSelection(0);
+        spUso.setEnabled(false);
 
         CheckBox cbDisponibilidad = view.findViewById(R.id.checkBox);
 

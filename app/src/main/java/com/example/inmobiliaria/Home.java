@@ -3,6 +3,8 @@ package com.example.inmobiliaria;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.example.inmobiliaria.modelo.Propietario;
+import com.example.inmobiliaria.modelo.PropietarioData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -28,10 +30,19 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Home extends AppCompatActivity implements PropiedadesFragment.OnFragmentInteractionListener{
+public class Home extends AppCompatActivity implements
+        PropiedadesFragment.OnFragmentInteractionListener,
+        InquilinosFragment.OnFragmentInteractionListener,
+        PerfilFragment.OnFragmentInteractionListener,
+        PagosFragment.OnFragmentInteractionListener,
+        ContratosFragment.OnFragmentInteractionListener,
+        PropiedadFragment.OnFragmentInteractionListener
+{
 
     private AppBarConfiguration mAppBarConfiguration;
     private TextView tvTituloEncabezado, tvEmailEncabezado;
+
+    public static int idPropietario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +64,25 @@ public class Home extends AppCompatActivity implements PropiedadesFragment.OnFra
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.perfilFragment, R.id.propiedadesFragment, R.id.inquilinosFragment,
-                R.id.pagosFragment, R.id.contratosFragment, R.id.nav_send)
+                R.id.pagosFragment, R.id.contratosFragment, R.id.cerrarSesionFragment)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        //NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+
         NavigationUI.setupWithNavController(navigationView, navController);
 
         View headerView = navigationView.getHeaderView(0);
+        Propietario p = new PropietarioData().obtenerPropietarioPorId(Home.idPropietario);
         tvTituloEncabezado = headerView.findViewById(R.id.tv1);
+        tvTituloEncabezado.setText(p.getNombre());
         tvEmailEncabezado = headerView.findViewById(R.id.tv2);
-        //navController.navigate(R.id.action_nav_home_to_propiedadesFragment);
+        tvEmailEncabezado.setText(p.getMail());
+
+
+        Bundle bundle = getIntent().getExtras();
+        idPropietario = bundle.getInt("idPropietario");
+        Toast.makeText(this, "Bienvenido "+p.getNombre(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

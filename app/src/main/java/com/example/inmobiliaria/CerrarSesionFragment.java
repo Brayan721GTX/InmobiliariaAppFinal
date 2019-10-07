@@ -1,36 +1,25 @@
 package com.example.inmobiliaria;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import com.example.inmobiliaria.modelo.Inquilino;
-import com.example.inmobiliaria.modelo.InquilinoData;
-
-import java.util.ArrayList;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link InquilinosFragment.OnFragmentInteractionListener} interface
+ * {@link CerrarSesionFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link InquilinosFragment#newInstance} factory method to
+ * Use the {@link CerrarSesionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class InquilinosFragment extends Fragment {
+public class CerrarSesionFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -42,9 +31,7 @@ public class InquilinosFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private String idInmueble;
-
-    public InquilinosFragment() {
+    public CerrarSesionFragment() {
         // Required empty public constructor
     }
 
@@ -54,11 +41,11 @@ public class InquilinosFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment InquilinosFragment.
+     * @return A new instance of fragment CerrarSesionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static InquilinosFragment newInstance(String param1, String param2) {
-        InquilinosFragment fragment = new InquilinosFragment();
+    public static CerrarSesionFragment newInstance(String param1, String param2) {
+        CerrarSesionFragment fragment = new CerrarSesionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,51 +60,14 @@ public class InquilinosFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        Bundle bundle = getArguments();
-        if(bundle == null) {
-            Bundle bundle2 = new Bundle();
-            bundle2.putString("tipo", "inquilinos");
-            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_inquilinosFragment_to_propiedadesFragment, bundle2);
-        }
-        else{
-            this.idInmueble = bundle.getString("idInmueble");
-        }
+        getActivity().finish();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_inquilinos, container, false);
-
-        final ArrayList<Inquilino> inquilinos = new InquilinoData().obtenerInquilinosDePropiedad(Integer.parseInt(this.idInmueble));
-
-        //final ArrayList<Inquilino> inquilinos = new ArrayList<Inquilino>();//Obtener los inquilinos del modelo
-        //inquilinos.add(new Inquilino(1, "12345", "Gustavo", "Bic", "La Punta", "26634543"));
-
-        InquilinoAdapter inquilinoAdapter = new InquilinoAdapter(getContext(), R.layout.item_inquilino, inquilinos, getLayoutInflater());
-
-        ListView listView = view.findViewById(R.id.listViewInquilinos);
-        listView.setAdapter(inquilinoAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mostrarInformacionInquilino(inquilinos.get(position));
-            }
-        });
-
-        return view;
-    }
-
-    public void mostrarInformacionInquilino(Inquilino i) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Información del inquilino");
-        builder.setMessage("Dni: "+i.getDni()+"\nApellido: "+i.getApellido()+"\nNombre: "+i.getNombre()+"\nDirección: "+i.getDireccion()+"\nTeléfono: "+i.getTelefono());
-        builder.setPositiveButton("Ok",null);
-        builder.create();
-        builder.show();
+        return inflater.inflate(R.layout.fragment_cerrar_sesion, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

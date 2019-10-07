@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.inmobiliaria.modelo.Alquiler;
+import com.example.inmobiliaria.modelo.AlquilerData;
+import com.example.inmobiliaria.modelo.Inquilino;
+import com.example.inmobiliaria.modelo.Propiedad;
+import com.example.inmobiliaria.modelo.Propietario;
 
 import java.util.ArrayList;
 
@@ -37,6 +42,8 @@ public class ContratosFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private String idInmueble;
 
     public ContratosFragment() {
         // Required empty public constructor
@@ -67,6 +74,16 @@ public class ContratosFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        Bundle bundle = getArguments();
+        if(bundle == null) {
+            Bundle bundle2 = new Bundle();
+            bundle2.putString("tipo", "contratos");
+            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_contratosFragment_to_propiedadesFragment, bundle2);
+        }
+        else{
+            this.idInmueble = bundle.getString("idInmueble");
+        }
     }
 
     @Override
@@ -76,7 +93,14 @@ public class ContratosFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_contratos, container, false);
 
-        final ArrayList<Alquiler> contratos = new ArrayList<Alquiler>();//Obtener los contratos del modelo
+        final ArrayList<Alquiler> contratos = new AlquilerData().obtenerContratosDePropiedad(Integer.parseInt(this.idInmueble));
+
+        /*final ArrayList<Alquiler> contratos = new ArrayList<Alquiler>();//Obtener los contratos del modelo
+        Inquilino i = new Inquilino(1, "12345", "Gustavo", "Bic", "La Punta", "26634543");
+
+        Propietario propietario = new Propietario(1, "264343534", "Gates", "Bill", "2664123432", "excample@gmail.com","nada");
+        Propiedad p = new Propiedad(1, "asd", 3, "Departamento", "Comercial", 10000, true, propietario);
+        contratos.add(new Alquiler(1, 10000, null, null, i, p));*/
 
         ContratoAdapter contratoAdapter = new ContratoAdapter(getContext(), R.layout.item_contrato, contratos, getLayoutInflater());
 

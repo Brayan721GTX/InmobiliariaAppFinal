@@ -5,15 +5,20 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.inmobiliaria.modelo.Propiedad;
+import com.example.inmobiliaria.modelo.PropiedadData;
+import com.example.inmobiliaria.modelo.Propietario;
 
 import java.util.ArrayList;
 
@@ -35,6 +40,8 @@ public class PropiedadesFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private String tipo;
 
     private OnFragmentInteractionListener mListener;
 
@@ -67,6 +74,10 @@ public class PropiedadesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        
+        if (getArguments() != null) {
+            Toast.makeText(getContext(), "Elija una propiedad para continuar", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -77,12 +88,38 @@ public class PropiedadesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_propiedades, container, false);
 
         //Obtener del modelo
-        ArrayList<Propiedad> propiedades = new ArrayList<Propiedad>();
+        final ArrayList<Propiedad> propiedades = new PropiedadData().obtenerPropiedades(Home.idPropietario);
+        //final ArrayList<Propiedad> propiedades = new ArrayList<Propiedad>();
+        //Propietario propietario = new Propietario(1, "264343534", "Gates", "Bill", "2664123432", "excample@gmail.com","nada");
+        //propiedades.add(new Propiedad(1, "asd", 3, "Departamento", "Comercial", 10000, true, propietario));
 
         PropiedadAdapter adapter = new PropiedadAdapter(getContext(), R.layout.item_propiedad, propiedades, inflater);
 
         ListView listViewPropiedades = view.findViewById(R.id.listViewPropiedades);
         listViewPropiedades.setAdapter(adapter);
+
+        listViewPropiedades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
+                bundle.putString("idInmueble", propiedades.get(position).getId()+"");
+
+                if(getArguments() == null) {
+                    Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_propiedadesFragment_to_propiedadFragment, bundle);
+                }
+                else{
+                    if (getArguments().getString("tipo").equals("inquilinos")) {
+                        Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_propiedadesFragment_to_inquilinosFragment, bundle);
+                    }
+                    else if (getArguments().getString("tipo").equals("pagos")) {
+                        Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_propiedadesFragment_to_pagosFragment, bundle);
+                    }
+                    else if (getArguments().getString("tipo").equals("contratos")) {
+                        Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_propiedadesFragment_to_contratosFragment, bundle);
+                    }
+                }
+            }
+        });
 
         return view;
     }
