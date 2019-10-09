@@ -7,6 +7,36 @@ import java.util.ArrayList;
 public class PropiedadData {
 
     public ArrayList<Propiedad> obtenerPropiedades(int idPropietario) {
+        ArrayList<Propiedad> propiedades = new ArrayList<Propiedad>();
+
+        for (Propiedad p : Conexion.propiedades) {
+            if (p.getPropietario().getId() == idPropietario) {
+                propiedades.add(p);
+            }
+        }
+
+        return propiedades;
+    }
+
+    public Propiedad obtenerPropiedadPorId(int idPropiedad) {
+        for (Propiedad p : Conexion.propiedades) {
+            if (p.getId() == idPropiedad) {
+                return p;
+            }
+        }
+
+        return null;
+    }
+
+    public void editarPropiedad(int idPropiedad, boolean estado) {
+        for (int i = 0; i < Conexion.propiedades.size(); i ++) {
+            if(Conexion.propiedades.get(i).getId() == idPropiedad) {
+                Conexion.propiedades.get(i).setDisponible(estado);
+            }
+        }
+    }
+
+    /*public ArrayList<Propiedad> obtenerPropiedades(int idPropietario) {
         try {
             Statement statement = Conexion.getConexion().createStatement();
 
@@ -81,5 +111,5 @@ public class PropiedadData {
         }
         catch (Exception e) {
         }
-    }
+    }*/
 }

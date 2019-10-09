@@ -29,11 +29,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Conexion conexion = new Conexion();
+
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
     }
 
-    private void probarConexion() {
+    /*private void probarConexion() {
         try {
             Connection connection = Conexion.getConexion();
             Toast.makeText(this, "Conectado", Toast.LENGTH_SHORT).show();
@@ -42,5 +44,5 @@ public class MainActivity extends AppCompatActivity {
             Log.e("HOLA", "EXCEPCION: "+e.getMessage());
             Toast.makeText(this, "No conectado: "+e.getMessage(), Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
 }

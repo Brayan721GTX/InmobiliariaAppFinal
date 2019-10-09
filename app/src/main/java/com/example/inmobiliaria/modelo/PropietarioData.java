@@ -8,6 +8,42 @@ import java.sql.Statement;
 public class PropietarioData {
 
     public Propietario credencialesValidas(String email, String password) {
+        for (Propietario p : Conexion.propietarios){
+            if(p.getMail().equals(email) && p.getPassword().equals(password)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public Propietario obtenerPropietarioPorId(int idPropietario) {
+        for (Propietario p : Conexion.propietarios){
+            if(p.getId() == idPropietario) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public Propietario obtenerPropietarioPorDni(String dni) {
+        for (Propietario p : Conexion.propietarios){
+            if(p.getDni().equals(dni)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public void editarPropietario(Propietario p) {
+        for (int i = 0; i < Conexion.propietarios.size(); i ++) {
+            if(Conexion.propietarios.get(i).getId() == p.getId()) {
+                Conexion.propietarios.remove(i);
+                Conexion.propietarios.add(i, p);
+            }
+        }
+    }
+
+    /*public Propietario credencialesValidas(String email, String password) {
         try {
             Statement statement = Conexion.getConexion().createStatement();
 
@@ -102,5 +138,5 @@ public class PropietarioData {
         }
         catch (Exception e) {
         }
-    }
+    }*/
 }

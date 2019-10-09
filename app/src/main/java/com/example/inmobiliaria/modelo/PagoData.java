@@ -7,6 +7,34 @@ import java.util.ArrayList;
 public class PagoData {
 
     public ArrayList<Pago> obtenerPagos() {
+        return Conexion.pagos;
+    }
+
+    public ArrayList<Pago> obtenerPagosDeAlquiler(int idAlquiler) {
+        ArrayList<Pago> pagos = new ArrayList<>();
+
+        for (Pago pago: Conexion.pagos) {
+            if (pago.getAlquiler().getId() == idAlquiler) {
+                pagos.add(pago);
+            }
+        }
+
+        return pagos;
+    }
+
+    public ArrayList<Pago> obtenerPagosDePropiedad(int idPropiedad) {
+        ArrayList<Pago> pagos = new ArrayList<>();
+
+        for (Pago pago: Conexion.pagos) {
+            if (pago.getAlquiler().getPropiedad().getId() == idPropiedad) {
+                pagos.add(pago);
+            }
+        }
+
+        return pagos;
+    }
+
+    /*public ArrayList<Pago> obtenerPagos() {
         try {
             Statement statement = Conexion.getConexion().createStatement();
 
@@ -84,5 +112,5 @@ public class PagoData {
         }
 
         return pagos;
-    }
+    }*/
 }

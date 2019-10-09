@@ -5,7 +5,39 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class InquilinoData {
+
     public ArrayList<Inquilino> obtenerInquilinos() {
+        return Conexion.inquilinos;
+    }
+
+    public Inquilino obtenerInquilino(int id) {
+        for (Inquilino i : Conexion.inquilinos) {
+            if (i.getId() == id) {
+                return i;
+            }
+        }
+
+        return null;
+    }
+
+    public ArrayList<Inquilino> obtenerInquilinosDePropiedad(int idPropiedad) {
+        ArrayList<Inquilino> inquilinos = new ArrayList<Inquilino>();
+
+        ArrayList<Alquiler> alquileresDePropiedad = new AlquilerData().obtenerContratosDePropiedad(idPropiedad);
+
+        for (Inquilino i : Conexion.inquilinos) {
+            for (Alquiler a: alquileresDePropiedad) {
+                if (a.getInquilino().getId() == i.getId()) {
+                    inquilinos.add(i);
+                    break;
+                }
+            }
+        }
+
+        return inquilinos;
+    }
+
+    /*public ArrayList<Inquilino> obtenerInquilinos() {
         try {
             Statement statement = Conexion.getConexion().createStatement();
 
@@ -72,5 +104,5 @@ public class InquilinoData {
         }
 
         return inquilinos;
-    }
+    }*/
 }

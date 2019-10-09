@@ -17,6 +17,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.inmobiliaria.modelo.Propiedad;
+import com.example.inmobiliaria.modelo.PropiedadData;
+
 import org.w3c.dom.Text;
 
 
@@ -82,14 +85,16 @@ public class PropiedadFragment extends Fragment{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_propiedad, container, false);
 
+        final Propiedad p = new PropiedadData().obtenerPropiedadPorId(Integer.parseInt(this.idInmueble));
+
         EditText etDirección = view.findViewById(R.id.editText9);
-        etDirección.setText("");
+        etDirección.setText(p.getDireccion());
 
         EditText etAmbientes = view.findViewById(R.id.editText10);
-        etAmbientes.setText("");
+        etAmbientes.setText(p.getAmbientes()+"");
 
         EditText etPrecio = view.findViewById(R.id.editText11);
-        etPrecio.setText("");
+        etPrecio.setText(p.getPrecio()+"");
 
         Spinner spTipo = view.findViewById(R.id.spinner);
         String[] arrayTipos = new String[]{"Departamento", "Local", "Depósito", "Oficina individual"};
@@ -97,7 +102,8 @@ public class PropiedadFragment extends Fragment{
                 android.R.layout.simple_spinner_item, arrayTipos);
         adapterTipos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTipo.setAdapter(adapterTipos);
-        spTipo.setSelection(0);
+        int spinnerPosition = adapterTipos.getPosition(p.getTipo());
+        spTipo.setSelection(spinnerPosition);
         spTipo.setEnabled(false);
 
         Spinner spUso = view.findViewById(R.id.spinner2);
@@ -106,17 +112,22 @@ public class PropiedadFragment extends Fragment{
                 android.R.layout.simple_spinner_item, arrayUsos);
         adapterUsos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spUso.setAdapter(adapterUsos);
-        spUso.setSelection(0);
+        int spinnerPosition2 = adapterUsos.getPosition(p.getUso());
+        spUso.setSelection(spinnerPosition2);
         spUso.setEnabled(false);
 
-        CheckBox cbDisponibilidad = view.findViewById(R.id.checkBox);
+        final CheckBox cbDisponibilidad = view.findViewById(R.id.checkBox);
+        if (p.isDisponible()) {
+            cbDisponibilidad.setChecked(true);
+        }
 
         Button btnEditar = view.findViewById(R.id.button3);
         
         btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "En construcción...", Toast.LENGTH_SHORT).show();
+                new PropiedadData().editarPropiedad(p.getId(), cbDisponibilidad.isChecked());
+                Toast.makeText(getContext(), "Propiedad actualizada correctamente", Toast.LENGTH_SHORT).show();
             }
         });
 

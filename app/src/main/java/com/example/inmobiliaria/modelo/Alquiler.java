@@ -5,12 +5,12 @@ import net.sourceforge.jtds.jdbc.DateTime;
 public class Alquiler {
     private int id;
     private double precio;
-    private DateTime fechaInicio;
-    private DateTime fechaFin;
+    private String fechaInicio;
+    private String fechaFin;
     private Inquilino inquilino;
     private Propiedad propiedad;
 
-    public Alquiler(int id, double precio, DateTime fechaInicio, DateTime fechaFin, Inquilino inquilino, Propiedad propiedad) {
+    public Alquiler(int id, double precio, String fechaInicio, String fechaFin, Inquilino inquilino, Propiedad propiedad) {
         this.id = id;
         this.precio = precio;
         this.fechaInicio = fechaInicio;
@@ -35,19 +35,19 @@ public class Alquiler {
         this.precio = precio;
     }
 
-    public DateTime getFechaInicio() {
+    public String getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(DateTime fechaInicio) {
+    public void setFechaInicio(String fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public DateTime getFechaFin() {
+    public String getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(DateTime fechaFin) {
+    public void setFechaFin(String fechaFin) {
         this.fechaFin = fechaFin;
     }
 

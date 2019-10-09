@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity {
         if(propietario != null) {
             Intent intent = new Intent(this, Home.class);
 
-            int idPropietario = 1;//Obtener el id del propietario que inicio sesion del modelo
+            int idPropietario = propietario.getId();//Obtener el id del propietario que inicio sesion del modelo
             intent.putExtra("idPropietario", idPropietario);
             startActivity(intent);
         }

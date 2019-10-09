@@ -42,7 +42,7 @@ public class InquilinosFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private String idInmueble;
+    private int idInmueble;
 
     public InquilinosFragment() {
         // Required empty public constructor
@@ -81,7 +81,7 @@ public class InquilinosFragment extends Fragment {
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_inquilinosFragment_to_propiedadesFragment, bundle2);
         }
         else{
-            this.idInmueble = bundle.getString("idInmueble");
+            this.idInmueble = Integer.parseInt(bundle.getString("idInmueble"));
         }
     }
 
@@ -91,7 +91,7 @@ public class InquilinosFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inquilinos, container, false);
 
-        final ArrayList<Inquilino> inquilinos = new InquilinoData().obtenerInquilinosDePropiedad(Integer.parseInt(this.idInmueble));
+        final ArrayList<Inquilino> inquilinos = new InquilinoData().obtenerInquilinosDePropiedad(this.idInmueble);
 
         //final ArrayList<Inquilino> inquilinos = new ArrayList<Inquilino>();//Obtener los inquilinos del modelo
         //inquilinos.add(new Inquilino(1, "12345", "Gustavo", "Bic", "La Punta", "26634543"));

@@ -43,7 +43,7 @@ public class ContratosFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private String idInmueble;
+    private int idInmueble;
 
     public ContratosFragment() {
         // Required empty public constructor
@@ -82,7 +82,7 @@ public class ContratosFragment extends Fragment {
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_contratosFragment_to_propiedadesFragment, bundle2);
         }
         else{
-            this.idInmueble = bundle.getString("idInmueble");
+            this.idInmueble = Integer.parseInt(bundle.getString("idInmueble"));
         }
     }
 
@@ -93,7 +93,7 @@ public class ContratosFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_contratos, container, false);
 
-        final ArrayList<Alquiler> contratos = new AlquilerData().obtenerContratosDePropiedad(Integer.parseInt(this.idInmueble));
+        final ArrayList<Alquiler> contratos = new AlquilerData().obtenerContratosDePropiedad(this.idInmueble);
 
         /*final ArrayList<Alquiler> contratos = new ArrayList<Alquiler>();//Obtener los contratos del modelo
         Inquilino i = new Inquilino(1, "12345", "Gustavo", "Bic", "La Punta", "26634543");

@@ -50,7 +50,7 @@ public class PagosFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private String idInmueble;
+    private int idInmueble;
 
     public PagosFragment() {
         // Required empty public constructor
@@ -89,7 +89,7 @@ public class PagosFragment extends Fragment {
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_pagosFragment_to_propiedadesFragment, bundle2);
         }
         else{
-            this.idInmueble = bundle.getString("idInmueble");
+            this.idInmueble = Integer.parseInt(bundle.getString("idInmueble"));
         }
     }
 
@@ -100,7 +100,7 @@ public class PagosFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_pagos, container, false);
 
-        final ArrayList<Pago> pagos = new PagoData().obtenerPagosDePropiedad(Integer.parseInt(this.idInmueble));
+        final ArrayList<Pago> pagos = new PagoData().obtenerPagosDePropiedad(this.idInmueble);
 
         /*final ArrayList<Pago> pagos = new ArrayList<Pago>();//Obtener pagos del modelo
         Inquilino i = new Inquilino(1, "12345", "Gustavo", "Bic", "La Punta", "26634543");

@@ -5,11 +5,11 @@ import net.sourceforge.jtds.jdbc.DateTime;
 public class Pago {
     private int id;
     private int nroPago;
-    private DateTime fecha;
+    private String fecha;
     private double importe;
     private Alquiler alquiler;
 
-    public Pago(int id, int nroPago, DateTime fecha, double importe, Alquiler alquiler) {
+    public Pago(int id, int nroPago, String fecha, double importe, Alquiler alquiler) {
         this.id = id;
         this.nroPago = nroPago;
         this.fecha = fecha;
@@ -33,11 +33,11 @@ public class Pago {
         this.nroPago = nroPago;
     }
 
-    public DateTime getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(DateTime fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

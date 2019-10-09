@@ -7,6 +7,28 @@ import java.util.ArrayList;
 public class AlquilerData {
 
     public ArrayList<Alquiler> obtenerContratosDePropiedad(int idPropiedad) {
+        ArrayList<Alquiler> alquileres = new ArrayList<Alquiler>();
+
+        for (Alquiler a: Conexion.alquileres) {
+            if (a.getPropiedad().getId() == idPropiedad) {
+                alquileres.add(a);
+            }
+        }
+
+        return alquileres;
+    }
+
+    public Alquiler obtenerContrato(int idAlquiler) {
+        for (Alquiler a : Conexion.alquileres) {
+            if (a.getId() == idAlquiler) {
+                return a;
+            }
+        }
+
+        return null;
+    }
+
+    /*public ArrayList<Alquiler> obtenerContratosDePropiedad(int idPropiedad) {
         try {
             Statement statement = Conexion.getConexion().createStatement();
 
@@ -65,6 +87,6 @@ public class AlquilerData {
         }
 
         return null;
-    }
+    }*/
 
 }
